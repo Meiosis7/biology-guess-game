@@ -1,0 +1,513 @@
+:root {
+  color-scheme: light;
+  --ink: #16201b;
+  --muted: #66746d;
+  --paper: #f8faf7;
+  --panel: #ffffff;
+  --line: #d9e1db;
+  --green: #28b642;
+  --deep-green: #177a35;
+  --amber: #f2a51c;
+  --blue: #2a88df;
+  --rose: #ef476f;
+  --shadow: 0 18px 48px rgba(18, 43, 32, 0.16);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", Arial, sans-serif;
+  color: var(--ink);
+  background:
+    radial-gradient(circle at 18% 10%, rgba(52, 211, 153, 0.26), transparent 27%),
+    radial-gradient(circle at 83% 4%, rgba(42, 136, 223, 0.18), transparent 23%),
+    linear-gradient(135deg, #f6fff9 0%, #eef8ff 48%, #fff8e6 100%);
+}
+
+button,
+input {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+.app-shell {
+  width: min(100%, 980px);
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 24px 16px;
+  display: grid;
+  place-items: center;
+}
+
+.game-card {
+  width: min(100%, 760px);
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(217, 225, 219, 0.9);
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.topbar {
+  min-height: 76px;
+  padding: 14px 18px;
+  display: grid;
+  grid-template-columns: 44px 1fr 44px;
+  gap: 12px;
+  align-items: center;
+  background: #08120d;
+  color: #fff;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.brand h1 {
+  margin: 0;
+  font-size: clamp(24px, 5vw, 42px);
+  line-height: 1.36;
+  color: #ffe026;
+  text-shadow: 0 2px 0 #6f6100, 0 4px 0 rgba(0, 0, 0, 0.35);
+  max-width: 100%;
+  text-align: center;
+}
+
+.brand-mark {
+  flex: 0 0 auto;
+  width: 46px;
+  height: 46px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #22c55e, #38bdf8);
+  color: #fff;
+  font-weight: 900;
+  letter-spacing: 0;
+  box-shadow: inset 0 -3px 0 rgba(0, 0, 0, 0.18);
+}
+
+.icon-button,
+.close-button {
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  font-size: 24px;
+  font-weight: 800;
+}
+
+.icon-button:hover,
+.close-button:hover {
+  background: rgba(255, 255, 255, 0.22);
+}
+
+.hero-visual {
+  height: clamp(110px, 21vw, 180px);
+  padding: 8px 28px 0;
+  background: linear-gradient(180deg, #fefefe, #f7fbf7);
+  border-bottom: 1px solid var(--line);
+}
+
+.hero-visual svg {
+  width: 100%;
+  height: 100%;
+}
+
+.dna-line {
+  fill: none;
+  stroke: url("#cellGradient");
+  stroke-width: 12;
+  stroke-linecap: round;
+  opacity: 0.9;
+}
+
+.dna-line.alt {
+  opacity: 0.55;
+}
+
+.rungs line {
+  stroke: #94a3b8;
+  stroke-width: 6;
+  stroke-linecap: round;
+  opacity: 0.62;
+}
+
+.cell {
+  fill: rgba(52, 211, 153, 0.26);
+  stroke: #10b981;
+  stroke-width: 5;
+}
+
+.nucleus {
+  fill: rgba(42, 136, 223, 0.28);
+  stroke: #2a88df;
+  stroke-width: 4;
+}
+
+.status-panel {
+  padding: 28px 28px 18px;
+  text-align: center;
+}
+
+.status-panel p {
+  margin: 0 0 18px;
+  color: #55625b;
+  font-size: clamp(18px, 3vw, 26px);
+}
+
+.meter-row {
+  display: flex;
+  justify-content: center;
+  gap: 28px;
+  flex-wrap: wrap;
+  font-size: 22px;
+  font-weight: 800;
+}
+
+.progress {
+  width: min(460px, 100%);
+  height: 10px;
+  margin: 16px auto 0;
+  border-radius: 999px;
+  background: #e8eee9;
+  overflow: hidden;
+}
+
+.progress span {
+  display: block;
+  width: 0%;
+  height: 100%;
+  background: linear-gradient(90deg, var(--green), var(--amber));
+  transition: width 220ms ease;
+}
+
+.guess-form {
+  display: grid;
+  grid-template-columns: 1fr 150px;
+  gap: 12px;
+  padding: 0 28px 16px;
+}
+
+.guess-form input {
+  min-width: 0;
+  height: 58px;
+  padding: 0 18px;
+  border: 2px solid #d6ded8;
+  border-radius: 8px;
+  font-size: 22px;
+  outline: none;
+  background: #fff;
+}
+
+.guess-form input:focus {
+  border-color: var(--green);
+  box-shadow: 0 0 0 4px rgba(40, 182, 66, 0.12);
+}
+
+.guess-form button,
+.quick-row button {
+  border: 0;
+  border-radius: 8px;
+  color: #fff;
+  font-weight: 900;
+  box-shadow: inset 0 -3px 0 rgba(0, 0, 0, 0.16);
+}
+
+.guess-form button {
+  height: 58px;
+  background: linear-gradient(180deg, #35d21d, #20a60f);
+  font-size: 24px;
+}
+
+.quick-row {
+  padding: 0 28px 22px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.quick-row button {
+  min-height: 44px;
+  padding: 8px 10px;
+  background: #26372d;
+  font-size: 16px;
+}
+
+.quick-row button:nth-child(1) {
+  background: var(--blue);
+}
+
+.quick-row button:nth-child(2) {
+  background: var(--amber);
+}
+
+.quick-row button:nth-child(3) {
+  background: #46534c;
+}
+
+.result-board {
+  border-top: 1px solid var(--line);
+  background: #fbfdfb;
+}
+
+.board-head,
+.result-row {
+  display: grid;
+  grid-template-columns: 1fr minmax(116px, 170px);
+  gap: 12px;
+  align-items: center;
+}
+
+.board-head {
+  padding: 12px 28px;
+  color: var(--muted);
+  font-weight: 800;
+}
+
+.result-list {
+  min-height: 220px;
+  max-height: 44vh;
+  overflow: auto;
+  padding: 0 28px 26px;
+}
+
+.empty-state {
+  min-height: 140px;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  color: var(--muted);
+  border: 1px dashed #cbd8cf;
+  border-radius: 8px;
+  padding: 20px;
+  background: #fff;
+}
+
+.result-row {
+  min-height: 54px;
+  margin-bottom: 8px;
+}
+
+.word-cell,
+.score-cell {
+  min-height: 54px;
+  display: flex;
+  align-items: center;
+  border: 1px solid #d7dfd9;
+  border-radius: 8px;
+  background: #fff;
+  font-size: 24px;
+  overflow: hidden;
+}
+
+.word-cell {
+  justify-content: center;
+  flex-direction: column;
+  padding: 8px 12px;
+  font-weight: 800;
+  gap: 2px;
+}
+
+.guess-word {
+  line-height: 1.15;
+}
+
+.guess-reason {
+  max-width: 100%;
+  color: #64736b;
+  font-size: 13px;
+  line-height: 1.2;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.score-cell {
+  position: relative;
+  justify-content: flex-end;
+  padding: 8px 12px;
+  font-variant-numeric: tabular-nums;
+}
+
+.score-fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: var(--score-width);
+  background: rgba(242, 165, 28, 0.18);
+}
+
+.score-text {
+  position: relative;
+  z-index: 1;
+  font-weight: 800;
+}
+
+.result-row.hot .word-cell,
+.result-row.hot .score-cell {
+  background: #ee9718;
+  border-color: #b7720e;
+  color: #111;
+}
+
+.result-row.hot .guess-reason {
+  color: rgba(17, 17, 17, 0.72);
+}
+
+.result-row.warm .score-fill {
+  background: rgba(250, 204, 21, 0.28);
+}
+
+.result-row.cool .score-fill {
+  background: rgba(56, 189, 248, 0.18);
+}
+
+.drawer {
+  position: fixed;
+  inset: 0;
+  display: none;
+  place-items: center;
+  padding: 18px;
+  background: rgba(8, 18, 13, 0.56);
+  z-index: 5;
+}
+
+.drawer.open {
+  display: grid;
+}
+
+.drawer-panel {
+  position: relative;
+  width: min(100%, 520px);
+  border-radius: 8px;
+  padding: 28px;
+  background: #fff;
+  box-shadow: var(--shadow);
+}
+
+.drawer-panel h2 {
+  margin: 0 0 14px;
+  font-size: 28px;
+}
+
+.drawer-panel p {
+  margin: 12px 0;
+  color: #46534c;
+  line-height: 1.75;
+  font-size: 18px;
+}
+
+.close-button {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: #0f1d15;
+}
+
+@media (max-width: 620px) {
+  .app-shell {
+    padding: 0;
+    display: block;
+  }
+
+  .game-card {
+    min-height: 100vh;
+    border-radius: 0;
+    border-left: 0;
+    border-right: 0;
+  }
+
+  .topbar {
+    grid-template-columns: 40px 1fr 40px;
+    padding: 12px;
+  }
+
+  .brand {
+    gap: 8px;
+  }
+
+  .brand-mark {
+    width: 38px;
+    height: 38px;
+    font-size: 14px;
+  }
+
+  .brand h1 {
+    font-size: clamp(20px, 7vw, 28px);
+    line-height: 1.42;
+  }
+
+  .icon-button {
+    width: 40px;
+    height: 40px;
+  }
+
+  .hero-visual {
+    padding-inline: 14px;
+  }
+
+  .status-panel {
+    padding: 22px 16px 16px;
+  }
+
+  .meter-row {
+    gap: 16px;
+    font-size: 19px;
+  }
+
+  .guess-form {
+    grid-template-columns: 1fr 104px;
+    padding-inline: 16px;
+  }
+
+  .guess-form input,
+  .guess-form button {
+    height: 52px;
+    font-size: 18px;
+  }
+
+  .quick-row {
+    grid-template-columns: 1fr;
+    padding-inline: 16px;
+  }
+
+  .board-head,
+  .result-list {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .board-head,
+  .result-row {
+    grid-template-columns: 1fr minmax(102px, 128px);
+    gap: 8px;
+  }
+
+  .word-cell,
+  .score-cell {
+    min-height: 50px;
+    font-size: 19px;
+  }
+
+  .guess-reason {
+    font-size: 12px;
+  }
+}
