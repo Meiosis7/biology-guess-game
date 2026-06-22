@@ -8,6 +8,14 @@
   </head>
   <body>
     <main class="app-shell">
+      <div class="comic-backdrop" aria-hidden="true">
+        <span class="speed-line line-a"></span>
+        <span class="speed-line line-b"></span>
+        <span class="speed-line line-c"></span>
+        <span class="spark spark-a"></span>
+        <span class="spark spark-b"></span>
+        <span class="spark spark-c"></span>
+      </div>
       <section class="game-card" aria-label="高中生物猜词游戏">
         <div class="topbar">
           <button class="icon-button" id="menuButton" aria-label="查看玩法">?</button>
@@ -22,13 +30,28 @@
           <svg viewBox="0 0 720 220" role="img">
             <defs>
               <linearGradient id="cellGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stop-color="#34d399" />
-                <stop offset="52%" stop-color="#38bdf8" />
-                <stop offset="100%" stop-color="#facc15" />
+                <stop offset="0%" stop-color="#3df7b0" />
+                <stop offset="45%" stop-color="#5be7ff" />
+                <stop offset="100%" stop-color="#ffd43b" />
               </linearGradient>
+              <filter id="inkGlow" x="-30%" y="-40%" width="160%" height="180%">
+                <feGaussianBlur stdDeviation="4" result="blur" />
+                <feColorMatrix in="blur" type="matrix" values="0 0 0 0 0.15 0 0 0 0 0.95 0 0 0 0 0.82 0 0 0 0.82 0" />
+                <feMerge>
+                  <feMergeNode />
+                  <feMergeNode in="SourceGraphic" />
+                </feMerge>
+              </filter>
+              <pattern id="dotGrid" width="14" height="14" patternUnits="userSpaceOnUse">
+                <circle cx="3" cy="3" r="1.8" fill="#0b1320" opacity="0.18" />
+              </pattern>
             </defs>
-            <path class="dna-line" d="M48 72 C160 12 242 186 354 126 S544 2 670 82" />
-            <path class="dna-line alt" d="M48 148 C160 88 242 262 354 202 S544 78 670 158" />
+            <rect class="hero-dots" x="0" y="0" width="720" height="220" fill="url(#dotGrid)" />
+            <path class="motion-slash slash-a" d="M36 34 L186 8" />
+            <path class="motion-slash slash-b" d="M518 202 L696 166" />
+            <path class="motion-slash slash-c" d="M92 204 L244 172" />
+            <path class="dna-line" filter="url(#inkGlow)" d="M48 72 C160 12 242 186 354 126 S544 2 670 82" />
+            <path class="dna-line alt" filter="url(#inkGlow)" d="M48 148 C160 88 242 262 354 202 S544 78 670 158" />
             <g class="rungs">
               <line x1="93" y1="55" x2="93" y2="132" />
               <line x1="154" y1="60" x2="154" y2="137" />
@@ -43,6 +66,8 @@
             <circle class="nucleus" cx="156" cy="158" r="18" />
             <circle class="cell small" cx="594" cy="70" r="36" />
             <circle class="nucleus small" cx="594" cy="70" r="13" />
+            <path class="impact impact-a" d="M110 126 L82 96 M126 115 L116 77 M190 187 L226 208" />
+            <path class="impact impact-b" d="M558 38 L526 10 M628 43 L666 18 M630 100 L676 118" />
           </svg>
         </div>
 
