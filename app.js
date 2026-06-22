@@ -355,7 +355,9 @@ const els = {
   restartTopButton: document.querySelector("#restartTopButton"),
   menuButton: document.querySelector("#menuButton"),
   drawer: document.querySelector("#drawer"),
-  closeDrawer: document.querySelector("#closeDrawer")
+  closeDrawer: document.querySelector("#closeDrawer"),
+  card: document.querySelector(".game-card"),
+  statusPanel: document.querySelector(".status-panel")
 };
 
 function normalizeWord(value) {
@@ -575,6 +577,24 @@ function classify(score) {
   return "cool";
 }
 
+function pulseMessage() {
+  els.statusPanel.classList.remove("message-burst");
+  void els.statusPanel.offsetWidth;
+  els.statusPanel.classList.add("message-burst");
+}
+
+function shakeCard() {
+  els.card.classList.remove("shake");
+  void els.card.offsetWidth;
+  els.card.classList.add("shake");
+}
+
+function flashWin() {
+  els.card.classList.remove("win-flash");
+  void els.card.offsetWidth;
+  els.card.classList.add("win-flash");
+}
+
 function render() {
   const guessed = state.guesses.length;
   els.guessCount.textContent = `已猜 ${guessed} 次`;
@@ -626,12 +646,16 @@ function submitGuess(word) {
   const clean = normalizeWord(word);
   if (!clean) {
     els.message.textContent = "先输入一个词语再猜。";
+    pulseMessage();
+    shakeCard();
     return;
   }
 
   if (state.guesses.some((item) => item.word === clean)) {
     els.message.textContent = "这个词已经猜过了，换一个角度试试。";
     els.input.select();
+    pulseMessage();
+    shakeCard();
     return;
   }
 
@@ -643,10 +667,12 @@ function submitGuess(word) {
     state.finished = true;
     els.input.disabled = true;
     els.message.textContent = `猜中了！答案是「${state.target.word}」，共用了 ${state.guesses.length} 次。`;
+    flashWin();
   } else if (state.guesses.length >= MAX_GUESSES) {
     state.finished = true;
     els.input.disabled = true;
     els.message.textContent = `次数用完了，答案是「${state.target.word}」。`;
+    shakeCard();
   } else if (score >= 70) {
     els.message.textContent = "非常接近，顺着同一章的核心概念继续猜。";
   } else if (score >= 40) {
@@ -657,6 +683,7 @@ function submitGuess(word) {
     els.message.textContent = "关联度偏低，可能不是这个章节。";
   }
 
+  pulseMessage();
   render();
 }
 
@@ -665,16 +692,19 @@ function giveHint() {
   state.hintLevel += 1;
   if (state.hintLevel === 1) {
     els.message.textContent = `提示：目标词属于「${state.target.chapter}」模块。`;
+    pulseMessage();
     return;
   }
   if (state.hintLevel === 2) {
     els.message.textContent = `提示：它和「${state.target.tags.slice(0, 2).join("、")}」有关。`;
+    pulseMessage();
     return;
   }
   const masked = [...state.target.word]
     .map((char, index) => (index === 0 || index === state.target.word.length - 1 ? char : "＿"))
     .join("");
   els.message.textContent = `最后提示：${masked}，共 ${state.target.word.length} 个字/字符。`;
+  pulseMessage();
 }
 
 els.form.addEventListener("submit", (event) => {
@@ -686,6 +716,7 @@ els.hintButton.addEventListener("click", giveHint);
 els.shuffleButton.addEventListener("click", () => {
   startGame(true);
   els.message.textContent = "已换一个隐藏词。";
+  pulseMessage();
 });
 els.restartButton.addEventListener("click", () => startGame());
 els.restartTopButton.addEventListener("click", () => startGame());
