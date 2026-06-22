@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>高中生物猜词</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="game-card" aria-label="高中生物猜词游戏">
+        <div class="topbar">
+          <button class="icon-button" id="menuButton" aria-label="查看玩法">?</button>
+          <div class="brand">
+            <span class="brand-mark">Bio</span>
+            <h1>看相似度猜生物词</h1>
+          </div>
+          <button class="icon-button" id="restartTopButton" aria-label="重新开始">↻</button>
+        </div>
+
+        <div class="hero-visual" aria-hidden="true">
+          <svg viewBox="0 0 720 220" role="img">
+            <defs>
+              <linearGradient id="cellGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#34d399" />
+                <stop offset="52%" stop-color="#38bdf8" />
+                <stop offset="100%" stop-color="#facc15" />
+              </linearGradient>
+            </defs>
+            <path class="dna-line" d="M48 72 C160 12 242 186 354 126 S544 2 670 82" />
+            <path class="dna-line alt" d="M48 148 C160 88 242 262 354 202 S544 78 670 158" />
+            <g class="rungs">
+              <line x1="93" y1="55" x2="93" y2="132" />
+              <line x1="154" y1="60" x2="154" y2="137" />
+              <line x1="214" y1="104" x2="214" y2="181" />
+              <line x1="276" y1="139" x2="276" y2="216" />
+              <line x1="401" y1="97" x2="401" y2="174" />
+              <line x1="465" y1="47" x2="465" y2="124" />
+              <line x1="528" y1="37" x2="528" y2="114" />
+              <line x1="590" y1="58" x2="590" y2="135" />
+            </g>
+            <circle class="cell" cx="156" cy="158" r="48" />
+            <circle class="nucleus" cx="156" cy="158" r="18" />
+            <circle class="cell small" cx="594" cy="70" r="36" />
+            <circle class="nucleus small" cx="594" cy="70" r="13" />
+          </svg>
+        </div>
+
+        <div class="status-panel">
+          <p id="message">用最少的次数猜到一个隐藏的高中生物词语</p>
+          <div class="meter-row">
+            <span id="guessCount">已猜 0 次</span>
+            <span id="remainingCount">剩余 30 次</span>
+          </div>
+          <div class="progress" aria-hidden="true">
+            <span id="progressFill"></span>
+          </div>
+        </div>
+
+        <form class="guess-form" id="guessForm">
+          <input
+            id="guessInput"
+            type="text"
+            autocomplete="off"
+            inputmode="text"
+            placeholder="输入高中生物词语"
+            aria-label="输入猜测词语"
+          />
+          <button type="submit">猜测</button>
+        </form>
+
+        <div class="quick-row" aria-label="快捷操作">
+          <button type="button" id="hintButton">给点提示</button>
+          <button type="button" id="shuffleButton">换一个词</button>
+          <button type="button" id="restartButton">再来一局</button>
+        </div>
+
+        <section class="result-board" aria-label="猜测结果">
+          <div class="board-head">
+            <span>猜测词</span>
+            <span>关联度</span>
+          </div>
+          <div id="resultList" class="result-list">
+            <div class="empty-state">先猜一个词，比如“细胞膜”“基因”“生态系统”。</div>
+          </div>
+        </section>
+      </section>
+
+      <aside class="drawer" id="drawer" aria-hidden="true">
+        <div class="drawer-panel">
+          <button class="close-button" id="closeDrawer" aria-label="关闭">×</button>
+          <h2>玩法简介</h2>
+          <p>系统从高中生物词库里隐藏一个目标词。每次猜测后会显示你猜的词和目标词的关联度，数值越高越接近。</p>
+          <p>关联度综合章节、概念标签、字面重合和常见搭配计算。30 次内猜中即可通关。</p>
+          <p>词库覆盖细胞、代谢、遗传、变异、进化、稳态、生态和生物技术等高中生物内容。</p>
+        </div>
+      </aside>
+    </main>
+    <script src="./app.js"></script>
+  </body>
+</html>
