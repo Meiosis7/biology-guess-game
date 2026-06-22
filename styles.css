@@ -254,99 +254,73 @@ button {
 }
 
 .hero-visual {
+  position: relative;
   height: clamp(130px, 23vw, 196px);
-  padding: 4px 28px 0;
+  padding: 0;
   background:
     linear-gradient(135deg, rgba(255, 210, 63, 0.2), transparent 28%),
     linear-gradient(45deg, rgba(82, 216, 255, 0.2), transparent 36%),
     #fff9ed;
   border-bottom: 4px solid var(--line);
+  overflow: hidden;
 }
 
-.hero-visual svg {
+.hero-video {
   width: 100%;
   height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: center;
+  filter: saturate(1.12) contrast(1.06);
 }
 
-.hero-dots {
-  animation: dotDrift 9s linear infinite;
+.hero-visual::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 20% 22%, rgba(16, 18, 24, 0.16) 0 1px, transparent 1.7px),
+    linear-gradient(90deg, rgba(69, 245, 168, 0.1), transparent 28%, rgba(255, 76, 139, 0.12));
+  background-size: 12px 12px, auto;
+  mix-blend-mode: multiply;
+  z-index: 1;
 }
 
-.dna-line {
-  fill: none;
-  stroke: url("#cellGradient");
-  stroke-width: 13;
-  stroke-linecap: round;
-  stroke-dasharray: 76 20;
-  opacity: 0.96;
-  animation: dnaDash 3.4s linear infinite;
+.hero-visual::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-top: 0;
+  box-shadow: inset 0 0 0 4px rgba(16, 18, 24, 0.12);
+  z-index: 2;
 }
 
-.dna-line.alt {
-  opacity: 0.62;
-  animation-direction: reverse;
+.video-ink {
+  position: absolute;
+  z-index: 3;
+  pointer-events: none;
+  height: 7px;
+  border: 2px solid var(--line);
+  background: var(--cyan);
+  box-shadow: 4px 4px 0 rgba(16, 18, 24, 0.3);
+  transform: rotate(-14deg);
+  animation: slideSlash 4.4s ease-in-out infinite;
 }
 
-.rungs line {
-  stroke: #151821;
-  stroke-width: 6;
-  stroke-linecap: round;
-  opacity: 0.48;
-  animation: rungBlink 1.4s ease-in-out infinite alternate;
+.ink-a {
+  width: 160px;
+  left: 4%;
+  top: 18%;
 }
 
-.motion-slash,
-.impact {
-  fill: none;
-  stroke: var(--line);
-  stroke-width: 6;
-  stroke-linecap: round;
-}
-
-.motion-slash {
-  opacity: 0.5;
-  stroke-dasharray: 90 20;
-  animation: slashMove 2.6s linear infinite;
-}
-
-.slash-b {
-  stroke: var(--magenta);
-  animation-delay: -0.8s;
-}
-
-.slash-c {
-  stroke: var(--cyan);
-  animation-delay: -1.5s;
-}
-
-.impact {
-  opacity: 0.8;
-  animation: impactPop 1.5s steps(2, end) infinite;
-}
-
-.impact-b {
-  animation-delay: -0.6s;
-}
-
-.cell {
-  fill: rgba(69, 245, 168, 0.25);
-  stroke: #08a979;
-  stroke-width: 6;
-  filter: drop-shadow(5px 5px 0 rgba(16, 18, 24, 0.28));
-  transform-origin: 156px 158px;
-  animation: cellFloat 3s ease-in-out infinite;
-}
-
-.cell.small {
-  transform-origin: 594px 70px;
-  animation-delay: -1s;
-}
-
-.nucleus {
-  fill: rgba(82, 216, 255, 0.42);
-  stroke: #2171ff;
-  stroke-width: 5;
-  animation: nucleusPulse 1.5s ease-in-out infinite;
+.ink-b {
+  width: 120px;
+  right: 6%;
+  bottom: 16%;
+  background: var(--magenta);
+  animation-delay: -1.6s;
 }
 
 .status-panel {
@@ -916,7 +890,7 @@ button {
 
   .hero-visual {
     height: 110px;
-    padding-inline: 14px;
+    padding: 0;
   }
 
   .status-panel {
