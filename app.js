@@ -404,6 +404,10 @@ function groupNamesFor(terms, options = {}) {
     .map((group) => group.name);
 }
 
+function exactGroupNamesFor(term) {
+  return semanticGroups.filter((group) => group.name === term).map((group) => group.name);
+}
+
 function buildFeaturesForConcept(word) {
   const entry = byWord.get(word);
   const features = new Map();
@@ -418,9 +422,10 @@ function buildFeaturesForConcept(word) {
     entry.tags.forEach((tag) => addWeighted(features, `标签:${tag}`, 1.08));
   }
 
-  const primaryGroups = groupNamesFor([word, entry?.chapter].filter(Boolean));
+  const primaryGroups = groupNamesFor([word]);
+  const chapterGroups = entry ? exactGroupNamesFor(entry.chapter) : [];
   const tagGroups = entry ? groupNamesFor(entry.tags, { fromTags: true }) : [];
-  new Set([...primaryGroups, ...tagGroups]).forEach((name) => {
+  new Set([...primaryGroups, ...chapterGroups, ...tagGroups]).forEach((name) => {
     addWeighted(features, `知识团:${name}`, 1.18);
     addWeighted(features, name, 0.68);
   });
@@ -455,11 +460,13 @@ function directRelationScore(guessWord, target) {
   const guess = byWord.get(guessWord);
   const guessTerms = guess ? [guess.word, guess.chapter, ...guess.tags] : [guessWord];
   const guessGroups = new Set([
-    ...groupNamesFor([guessWord, guess?.chapter].filter(Boolean)),
+    ...groupNamesFor([guessWord]),
+    ...(guess ? exactGroupNamesFor(guess.chapter) : []),
     ...(guess ? groupNamesFor(guess.tags, { fromTags: true }) : [])
   ]);
   const targetGroups = new Set([
-    ...groupNamesFor([target.word, target.chapter]),
+    ...groupNamesFor([target.word]),
+    ...exactGroupNamesFor(target.chapter),
     ...groupNamesFor(target.tags, { fromTags: true })
   ]);
 
@@ -499,11 +506,13 @@ function explainGuess(guessWord, score) {
   const targetTerms = [target.word, target.chapter, ...target.tags];
   const guessTerms = guess ? [guess.word, guess.chapter, ...guess.tags] : [guessWord];
   const guessGroups = new Set([
-    ...groupNamesFor([guessWord, guess?.chapter].filter(Boolean)),
+    ...groupNamesFor([guessWord]),
+    ...(guess ? exactGroupNamesFor(guess.chapter) : []),
     ...(guess ? groupNamesFor(guess.tags, { fromTags: true }) : [])
   ]);
   const targetGroups = new Set([
-    ...groupNamesFor([target.word, target.chapter]),
+    ...groupNamesFor([target.word]),
+    ...exactGroupNamesFor(target.chapter),
     ...groupNamesFor(target.tags, { fromTags: true })
   ]);
   const sharedGroups = [...guessGroups].filter((name) => targetGroups.has(name));
