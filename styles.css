@@ -925,8 +925,17 @@ button {
   }
 
   .quick-row {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 7px;
     padding-inline: 16px;
+  }
+
+  .quick-row button {
+    min-height: 42px;
+    padding: 6px 4px;
+    font-size: 14px;
+    box-shadow: 3px 3px 0 var(--line);
+    white-space: nowrap;
   }
 
   .board-head,
